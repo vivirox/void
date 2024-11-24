@@ -8,11 +8,9 @@ There are a few ways to contribute:
 - Build New Features ([Project](https://github.com/orgs/voideditor/projects/2/views/3))
 - Submit Issues/Docs/Bugs ([Issues](https://github.com/voideditor/void/issues))
 
-
 ## Building the full IDE
 
 Please follow the steps below to build the IDE. If you have any questions, feel free to [submit an issue](https://github.com/voideditor/void/issues/new) with any build errors, or refer to VSCode's full [How to Contribute](https://github.com/microsoft/vscode/wiki/How-to-Contribute) page.
-
 
 ### a. Build Prerequisites - Mac
 
@@ -23,10 +21,12 @@ If you're using a Mac, make sure you have Python and XCode installed (you probab
 If you're using a Windows computer, first get [Visual Studio 2022](https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=Community) (recommended) or [VS Build Tools](https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=BuildTools) (not recommended). If you already have both, you might need to run the next few steps on both of them.
 
 Go to the "Workloads" tab and select:
+
 - `Desktop development with C++`
 - `Node.js build tools`
 
 Go to the "Individual Components" tab and select:
+
 - `MSVC v143 - VS 2022 C++ x64/x86 Spectre-mitigated libs (Latest)`,
 - `C++ ATL for latest build tools with Spectre Mitigations`,
 - `C++ MFC for latest build tools with Spectre Mitigations`.
@@ -36,6 +36,7 @@ Finally, click Install.
 ### c. Build Prerequisites - Linux
 
 First, make sure you've installed NodeJS and run `npm install -g node-gyp`. Then:
+
 - Debian (Ubuntu, etc) - `sudo apt-get install build-essential g++ libx11-dev libxkbfile-dev libsecret-1-dev libkrb5-dev python-is-python3`.
 - Red Hat (Fedora, etc) - `sudo dnf install @development-tools gcc gcc-c++ make libsecret-devel krb5-devel libX11-devel libxkbfile-devel`.
 - Others - see [How to Contribute](https://github.com/microsoft/vscode/wiki/How-to-Contribute).
@@ -46,21 +47,21 @@ To build Void, first follow the prerequisite steps above for your operating syst
 
 1. Install all dependencies.
 
-```
+```bash
 npm install
 ```
 
-2. Run `cd ./src/vs/workbench/contrib/void/browser/react/` and then `node ./build.js` to build Void's external dependencies (our React components, etc).
+1. Run `cd ./src/vs/workbench/contrib/void/browser/react/` and then `node ./build.js` to build Void's external dependencies (our React components, etc).
 
-3. Press <kbd>Ctrl+Shift+B</kbd>, or if you prefer using the terminal run `npm run watch`.
+2. Press `Ctrl+Shift+B`, or if you prefer using the terminal run `npm run watch`.
 
 This can take ~5 min.
 
-If you ran <kbd>Ctrl+Shift+B</kbd>, the build is done when you see two check marks.
+If you ran `Ctrl+Shift+B`, the build is done when you see two check marks.
 
 If you ran `npm run watch`, the build is done when you see something like this:
 
-```
+```bash
 [watch-extensions] [00:37:39] Finished compilation extensions with 0 errors after 19303 ms
 [watch-client    ] [00:38:06] Finished compilation with 0 errors after 46248 ms
 [watch-client    ] [00:38:07] Starting compilation...
@@ -69,8 +70,8 @@ If you ran `npm run watch`, the build is done when you see something like this:
 
 <!-- 3. Press <kbd>Ctrl+Shift+B</kbd> to start the build process. -->
 
-4. In a new terminal, run `./scripts/code.sh` (Mac/Linux) or `./scripts/code.bat` (Windows). This should open up the built IDE!
-You can always press <kbd>Ctrl+Shift+P</kbd> and run "Reload Window" inside the new window to see changes without re-building.
+1. In a new terminal, run `./scripts/code.sh` (Mac/Linux) or `./scripts/code.bat` (Windows). This should open up the built IDE!
+You can always press `Ctrl+Shift+P` and run "Reload Window" inside the new window to see changes without re-building.
 
 Now that you're set up, feel free to check out our [Issues](https://github.com/voideditor/void/issues) page.
 
@@ -80,41 +81,37 @@ Now that you're set up, feel free to check out our [Issues](https://github.com/v
 
 - If you see `[ERROR] Cannot start service: Host version "0.23.1" does not match binary version "0.23.0"`, run `npm i -D esbuild@0.23.0` or do a clean install of your npm dependencies.
 
-
 ## Bundling
 
 To bundle the IDE into an executable, run `npm run gulp vscode-darwin-arm64`.
 
 Here are the full options: `vscode-{win32-ia32 | win32-x64 | darwin-x64 | darwin-arm64 | linux-ia32 | linux-x64 | linux-arm}(-min)`
 
-
 ## Roadmap
 
 Here are the most important topics on our Roadmap. More ⭐'s = more important. Please refer to our [Issues](https://github.com/voideditor/void/issues) page for the latest issues.
 
-## ⭐⭐⭐ Make History work well.
+## ⭐⭐⭐ Make History work well
 
 When the user submits a response or presses the apply/accept/reject button, we should add these events to the history, allowing the user to undo/redo them. Right now there is unexpected behavior if the user tries to undo or redo their changes.
 
-## ⭐⭐⭐ Build Cursor-style quick edits (Ctrl+K).
+## ⭐⭐⭐ Build Cursor-style quick edits (Ctrl+K)
 
 When the user presses Ctrl+K, an input box should appear inline with the code that they were selecting. This is somewhat difficult to do because an extension alone cannot do this, and it requires creating a new component in the IDE. We think you can modify vscode's built-in "codelens" or "zone widget" components, but we are open to alternatives.
 
-## ⭐⭐⭐ Creative.
+## ⭐⭐⭐ Creative
 
 Examples: creating better code search, or supporting AI agents that can edit across files and make multiple LLM calls.
 
 Eventually, we want to build a convenient API for creating AI tools. The API will provide methods for creating the UI (showing an autocomplete suggestion, or creating a new diff), detecting event changes (like `onKeystroke` or `onFileOpen`), and modifying the user's file-system (storing indexes associated with each file), making it much easier to make your own AI plugin. We plan on building these features further along in timeline, but we wanted to list them for completeness.
 
-## ⭐ One-stars.
+## ⭐ One-stars
 
 ⭐ Let the user Accept / Reject all Diffs in an entire file via the sidebar.
 
-# Guidelines
+## Guidelines
 
 We're always glad to talk about new ideas, help you get set up, and make sure your changes align with our vision for the project. Feel free to shoot us a message in the #general channel of the [Discord](https://discord.gg/RSNjgaugJs) for any reason. Please check in especially if you want to make a lot of changes or build a large new feature.
-
-
 
 ## Submitting a Pull Request
 
@@ -122,7 +119,7 @@ Please submit a pull request once you've made a change. You don't need to submit
 
 Please don't use AI to write your PR 🙂.
 
-# Relevant files
+## Relevant files
 
 We keep track of all the files we've changed with Void so it's easy to rebase:
 
@@ -145,7 +142,6 @@ We keep track of all the files we've changed with Void so it's easy to rebase:
 - build/npm/dirs.js
 
 - vscode.proposed.editorInsets.d.ts - not modified, but code copied
-
 
 ## References
 

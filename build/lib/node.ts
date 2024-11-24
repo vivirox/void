@@ -5,8 +5,11 @@
 
 import * as path from 'path';
 import * as fs from 'fs';
+import * as process from 'node:process';
 
-const root = path.dirname(path.dirname(__dirname));
+import { URL } from 'url';
+
+const root = path.dirname(path.dirname(new URL(import.meta.url).pathname));
 const npmrcPath = path.join(root, 'remote', '.npmrc');
 const npmrc = fs.readFileSync(npmrcPath, 'utf8');
 const version = /^target="(.*)"$/m.exec(npmrc)![1];

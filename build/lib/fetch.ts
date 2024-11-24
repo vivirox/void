@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as es from 'event-stream';
-import * as VinylFile from 'vinyl';
+import VinylFile from 'vinyl';
 import * as log from 'fancy-log';
 import * as ansiColors from 'ansi-colors';
 import * as crypto from 'crypto';
@@ -46,7 +46,7 @@ export async function fetchUrl(url: string, options: IFetchOptions, retries = 10
 	try {
 		let startTime = 0;
 		if (verbose) {
-			log(`Start fetching ${ansiColors.magenta(url)}${retries !== 10 ? ` (${10 - retries} retry)` : ''}`);
+			log.default(`Start fetching ${ansiColors.magenta(url)}${retries !== 10 ? ` (${10 - retries} retry)` : ''}`);
 			startTime = new Date().getTime();
 		}
 		const controller = new AbortController();
@@ -57,7 +57,7 @@ export async function fetchUrl(url: string, options: IFetchOptions, retries = 10
 				signal: controller.signal as any /* Typings issue with lib.dom.d.ts */
 			});
 			if (verbose) {
-				log(`Fetch completed: Status ${response.status}. Took ${ansiColors.magenta(`${new Date().getTime() - startTime} ms`)}`);
+				log.default(`Fetch completed: Status ${response.status}. Took ${ansiColors.magenta(`${new Date().getTime() - startTime} ms`)}`);
 			}
 			if (response.ok && (response.status >= 200 && response.status < 300)) {
 				const contents = Buffer.from(await response.arrayBuffer());
@@ -66,13 +66,13 @@ export async function fetchUrl(url: string, options: IFetchOptions, retries = 10
 					if (actualSHA256Checksum !== options.checksumSha256) {
 						throw new Error(`Checksum mismatch for ${ansiColors.cyan(url)} (expected ${options.checksumSha256}, actual ${actualSHA256Checksum}))`);
 					} else if (verbose) {
-						log(`Verified SHA256 checksums match for ${ansiColors.cyan(url)}`);
+						log.default(`Verified SHA256 checksums match for ${ansiColors.cyan(url)}`);
 					}
 				} else if (verbose) {
-					log(`Skipping checksum verification for ${ansiColors.cyan(url)} because no expected checksum was provided`);
+					log.default(`Skipping checksum verification for ${ansiColors.cyan(url)} because no expected checksum was provided`);
 				}
 				if (verbose) {
-					log(`Fetched response body buffer: ${ansiColors.magenta(`${(contents as Buffer).byteLength} bytes`)}`);
+					log.default(`Fetched response body buffer: ${ansiColors.magenta(`${(contents as Buffer).byteLength} bytes`)}`);
 				}
 				return new VinylFile({
 					cwd: '/',
@@ -91,7 +91,7 @@ export async function fetchUrl(url: string, options: IFetchOptions, retries = 10
 		}
 	} catch (e) {
 		if (verbose) {
-			log(`Fetching ${ansiColors.cyan(url)} failed: ${e}`);
+			log.default(`Fetching ${ansiColors.cyan(url)} failed: ${e}`);
 		}
 		if (retries > 0) {
 			await new Promise(resolve => setTimeout(resolve, retryDelay));

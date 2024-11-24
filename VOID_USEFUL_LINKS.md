@@ -12,9 +12,7 @@ The Void team put together this list of links to get up and running with VSCode'
 
 - [How VS Code's sourcecode is organized](https://github.com/microsoft/vscode/wiki/Source-Code-Organization) - this explains where the entry point files are, what `browser/` and `common/` mean, etc. This is the most important read on this whole list! We recommend reading the whole thing.
 
-
 - [Every command](https://code.visualstudio.com/api/references/commands) built-in to VSCode - sometimes useful to reference.
-
 
 ## VSCode's Extension API
 
